@@ -16,15 +16,21 @@ const DAPP_NAME = "AUNO";
 export * from '@dcl/sdk'
 
 const wallets = getWallets();
-      try {
-        await wallets[0].enable(DAPP_NAME);
-        const unsubscribe = await wallets[0].subscribeAccounts((accounts) => {
-          // Save accounts...
-          // Also save the selected wallet name as well...
-        });
-      } catch (err) {
-        // Handle error. Refer to `libs/wallets/src/lib/errors`
-      }
+const connect = async () => {
+  try {
+    await wallets[0].enable(DAPP_NAME);
+    const unsubscribe = await wallets[0].subscribeAccounts((accounts) => {
+      console.log("accounts->>", accounts);
+      // Save accounts...
+      // Also save the selected wallet name as well...
+    });
+  } catch (err) {
+    console.log("talisman wallet connect failed!");
+    // Handle error. Refer to `libs/wallets/src/lib/errors`
+  }
+}
+
+connect();
 
 // Defining behavior. See `src/systems.ts` file.
 engine.addSystem(circularSystem)
